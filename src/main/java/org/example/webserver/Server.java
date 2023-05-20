@@ -1,4 +1,4 @@
-package br.ufsm.poli.csi.so.webserver;
+package org.example.webserver;
 
 import java.io.*;
 import java.net.ServerSocket;
