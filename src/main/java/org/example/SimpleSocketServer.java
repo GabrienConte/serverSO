@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 
 public class SimpleSocketServer extends Thread {
     private ServerSocket serverSocket;
-    private int port = 8080;
+    private int port;
     private boolean running = false;
 
     public SimpleSocketServer(int port) {
@@ -47,20 +47,6 @@ public class SimpleSocketServer extends Thread {
         }
     }
 
-    public static void main(String[] args) {
-        SimpleSocketServer server = new SimpleSocketServer(8080);
-        server.startServer();
-
-        // Automatically shutdown in 1 minute
-        try {
-            Thread.sleep(60000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        server.stopServer();
-    }
-
     class RequestHandler extends Thread {
         private Socket socket;
 
@@ -89,11 +75,13 @@ public class SimpleSocketServer extends Thread {
 
                     if (resource.equals("/")) {
                         resource = "/index.html";
-                    } else if (resource.contains("/compraingresso")) {
+                    } else if (resource.contains("/reserva")) {
+                        resource = "/reserva.html";
                         String[] arr = resource.split("/\\?");
-                        String[] form = arr[1].split("&");
+//                        String[] form = arr[1].split("&");
                         // Processar os parâmetros do formulário
                     }
+                    System.out.println(resource);
 
                     resource = resource.replace('/', File.separatorChar);
                     String header = "HTTP/1.1 200 OK\n" +
@@ -143,5 +131,21 @@ public class SimpleSocketServer extends Thread {
             return "text/html";
         }
     }
+
+    public static void main(String[] args) {
+        SimpleSocketServer server = new SimpleSocketServer(8080);
+        server.startServer();
+
+        // Automatically shutdown in 1 minute
+        try {
+            while(true){}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        server.stopServer();
+    }
+
+
 }
 
