@@ -60,7 +60,7 @@ public class SimpleSocketServer extends Thread {
                 try (InputStream in = socket.getInputStream();
                      OutputStream out = socket.getOutputStream()) {
 
-                    byte[] buffer = new byte[1024];
+                    byte[] buffer = new byte[20000];
                     int nBytes = in.read(buffer);
                     String request = new String(buffer, 0, nBytes);
                     String[] lines = request.split("\n");
@@ -77,6 +77,11 @@ public class SimpleSocketServer extends Thread {
                         resource = "/index.html";
                     } else if (resource.contains("/reserva")) {
                         resource = "/reserva.html";
+                        String[] arr = resource.split("/\\?");
+//                        String[] form = arr[1].split("&");
+                        // Processar os parâmetros do formulário
+                    } else if(resource.contains("/index")) {
+                        resource = "/index.html";
                         String[] arr = resource.split("/\\?");
 //                        String[] form = arr[1].split("&");
                         // Processar os parâmetros do formulário
