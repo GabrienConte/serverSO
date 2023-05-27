@@ -1,12 +1,17 @@
 package org.example.webserver;
 
+import org.example.global.Global;
+import org.example.model.Atributo;
+import org.example.model.Lugar;
+
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 class RequestHandler extends Thread {
     private Socket socket;
-
     RequestHandler(Socket socket) {
         this.socket = socket;
     }
@@ -14,6 +19,7 @@ class RequestHandler extends Thread {
     @Override
     public void run() {
         try {
+            String formProcesso = "";
             try (InputStream in = socket.getInputStream();
                  OutputStream out = socket.getOutputStream()) {
 
@@ -33,17 +39,17 @@ class RequestHandler extends Thread {
                 if (resource.equals("/")) {
                     resource = "/index.html";
                 } else if (resource.contains("/reserva")) {
+
+                    String[] arr = resource.split("[?]");
+                    if(arr.length > 1) {
+                        String[] form = arr[1].split("&");
+                    }
                     resource = "/reserva.html";
-                    String[] arr = resource.split("/\\?");
-//                        String[] form = arr[1].split("&");
-                    // Processar os parâmetros do formulário
                 } else if(resource.contains("/index")) {
+
+                    formProcesso = ProcessaHTML.ProcessaIndexForm(resource);
                     resource = "/index.html";
-                    String[] arr = resource.split("/\\?");
-//                        String[] form = arr[1].split("&");
-                    // Processar os parâmetros do formulário
                 }
-                System.out.println(resource);
 
                 resource = resource.replace('/', File.separatorChar);
                 String header = "HTTP/1.1 200 OK\n" +
@@ -63,6 +69,12 @@ class RequestHandler extends Thread {
                         }
                     }
                     String response = processVariables(bout);
+                    if(resource.contains("index")) {
+                        response = response.replace("<%lugares%>", ProcessaHTML.processaIndex(response));
+                        if(!formProcesso.isEmpty()) {
+                            response = response.replace("//mensagem", "alert('"+ formProcesso + "')");
+                        }
+                    }
                     out.write(response.getBytes(StandardCharsets.UTF_8));
                     out.flush();
                 }

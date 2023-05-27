@@ -14,56 +14,19 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">TheLast</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page">Pagina Inicial</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">Categorias</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        Shows
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Mês</a></li>
-                        <li><a class="dropdown-item" href="#">Semana</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Ex: Romeu e Julieta"
-                       aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Pesquisar</button>
-            </form>
-        </div>
-    </div>
-</nav>
 <div class="container d-flex justify-content-center align-items-center mt-5 vh-70">
     <div class="card text-center">
         <div class="card-body">
             <h1 class="card-title">Formulário de Reserva</h1>
-            <form action="index.html" method="GET">
+            <form id="reservaForm" action="index.html" method="GET">
+                <input type="hidden" id="dataReserva" name="dataReserva">
                 <div class="mb-3">
-                    <label for="nome" class="form-label">Número da reserva:</label>
-                    <input type="text" id="lugar" name="lugar" class="form-control" value="" disabled readonly>
+                    <label for="id" class="form-label">Número da reserva:</label>
+                    <input type="text" id="id" name="id" class="form-control fs-4 text-center" value="" readonly>
                 </div>
                 <div class="mb-3">
-                    <label for="nome" class="form-label">Nome:</label>
-                    <input type="text" id="nome" name="nome" class="form-control" required>
+                    <label for="reserva" class="form-label">Nome:</label>
+                    <input type="text" id="reserva" name="reserva" class="form-control form-control-lg" required>
                 </div>
                 <button type="submit" class="btn btn-primary" onclick="confirmReservation()">Confirmar</button>
                 <button type="button" class="btn btn-secondary" onclick="cancelReservation()">Cancelar</button>
@@ -82,8 +45,8 @@
     window.onload = function() {
         const url = getCurrentURL();
         const urlParams = new URL(url).searchParams;
-        var urlParamValue = urlParams.get('lugar');
-        document.getElementById('lugar').setAttribute('value', urlParamValue);
+        var urlParamValue = urlParams.get('id');
+        document.getElementById('id').setAttribute('value', urlParamValue);
     };
     function getCurrentURL () {
         return window.location.href;
@@ -96,10 +59,13 @@
         voltar()
     }
 
-    function confirmReservation() {
-
-        voltar()
-        alert("Reserva feita com sucesso");
+    function confirmReservation(e) {
+        var today = new Date();
+        var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+        var time = today.getHours() + "X" + today.getMinutes();
+        var dateTime = date + ' ' + time;
+        document.getElementById('dataReserva').setAttribute('value', dateTime.toString());
+        document.getElementById('reservaForm').submit();
     }
 </script>
 </html>
