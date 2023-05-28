@@ -1,2 +1,6 @@
 # serverSO
-Servidor criado na aula de Sistemas Operacionais
+Trabalho 1 de de sistemas operacionais.
+
+✒️ Autores
+    Gabriel Conte Rahmeier
+    Marcos Medeiros
