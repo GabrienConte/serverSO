@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.global.Global;
+import org.example.log.Log;
 import org.example.model.Lugar;
 import org.example.webserver.SimpleSocketServer;
 
@@ -10,6 +11,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         InicializaLugar();
+        Log.createFile();
         SimpleSocketServer server = new SimpleSocketServer(8080);
         server.startServer();
 
