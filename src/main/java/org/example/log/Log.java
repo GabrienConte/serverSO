@@ -27,7 +27,7 @@ public class Log {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
             Calendar cal = Calendar.getInstance();
 
-            File myObj = new File("C:\\Users\\Gabriel Conte\\IdeaProjects\\serverSO\\arquivos_log\\log"+ dateFormat.format(cal.getTime()) +".txt");
+            File myObj = new File("arquivos_log\\log"+ dateFormat.format(cal.getTime()) +".txt");
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
             } else {
