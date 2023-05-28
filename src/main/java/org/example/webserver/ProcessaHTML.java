@@ -1,6 +1,7 @@
 package org.example.webserver;
 
 import org.example.global.Global;
+import org.example.log.Log;
 import org.example.model.Atributo;
 import org.example.model.Lugar;
 
@@ -68,10 +69,10 @@ public class ProcessaHTML {
                             Atributo dataReserva = Atributo.atributoPorNome(atributos, "dataReserva");
                             lugarReservado.setReserva(reserva.getValor());
                             lugarReservado.setDataReserva(dataReserva.getValor().replace('X',':').replace('+',' '));
-                            System.out.println("[RESERVADO UM LUGAR] VALOR=" + reserva.getValor() + " ID=" + id.getValor());
+                            Log.logTexto("[RESERVADO UM LUGAR] VALOR=" + reserva.getValor() + " ID=" + id.getValor());
                             return "RESERVADO UM LUGAR COM SUCESSO";
                         } else {
-                            System.out.println("[LUGAR JÁ ESTÁ RESERVADO] VALOR=" + lugarReservado.getReserva() + " ID=" + lugarReservado.getId());
+                            Log.logTexto("[LUGAR JÁ ESTÁ RESERVADO] VALOR=" + lugarReservado.getReserva() + " ID=" + lugarReservado.getId());
                             return "LUGAR JÁ ESTÁ RESERVADO, TENTE OUTRO.";
                         }
                     }

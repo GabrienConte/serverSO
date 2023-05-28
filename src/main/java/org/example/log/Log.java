@@ -1,33 +1,27 @@
 package org.example.log;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.Random;
 
 public class Log {
-    public static void main(String[] args) {
-        new Log();
-    }
-
+    private static ArrayList<String> buffer = new ArrayList<>();
+    private File logFile;
     public Log() {
-        new Thread(new Produtor()).start();
-        new Thread(new Consumidor()).start();
+        this.logFile = createFile();
+        new Thread(new Leitor("Iniciou")).start();
+        new Thread(new Escritor()).start();
     }
 
-    private final int CAP_BUFFER = 100;
-    private List<Integer> buffer = new ArrayList<>(CAP_BUFFER);
-
-    public static void createFile() {
+    public static File createFile() {
+        File myObj = null;
         try {
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
-            Calendar cal = Calendar.getInstance();
-
-            File myObj = new File("arquivos_log\\log"+ dateFormat.format(cal.getTime()) +".txt");
+            myObj = new File("arquivos_log\\log"+ dataAtual("yyyy-MM-dd_HH-mm") +".txt");
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
             } else {
@@ -37,45 +31,64 @@ public class Log {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+        return myObj;
     }
 
-    public class Leitor implements Runnable {
-        private Random rnd = new Random(System.currentTimeMillis());
+    public static String dataAtual(String formato) {
+        DateFormat dateFormat = new SimpleDateFormat(formato);
+        Calendar cal = Calendar.getInstance();
+        return dateFormat.format(cal.getTime());
+    }
+
+    public static void logTexto(String texto) {
+        new Thread(new Leitor(texto)).start();
+    }
+
+    public static class Leitor implements Runnable {
+
+        private String texto;
+
+        public Leitor(String texto) {
+            this.texto = texto;
+        }
 
         @Override
         public void run() {
-            while (true) {
-                Integer inteiroProduzido = produzDado();
-                synchronized (buffer) {
-                    if (buffer.size() == CAP_BUFFER) { //cheio
-                        try { buffer.wait(); } catch (InterruptedException e) { }
-                    }
-                    buffer.add(inteiroProduzido);
-                    buffer.notify();
-                }
-                System.out.println("Produtor: produziu " + inteiroProduzido);
-
+            String textoRecebido = this.texto;
+            synchronized (buffer) {
+               buffer.add(textoRecebido);
             }
-        }
-
-        private Integer produzDado() {
-            return rnd.nextInt();
         }
     }
 
     public class Escritor implements Runnable {
-
         @Override
         public void run() {
             while (true) {
                 synchronized (buffer) {
-                    if (buffer.isEmpty()) { //vazio
-                        try { buffer.wait(); } catch (InterruptedException e) { }
+                    try {
+                        if(!buffer.isEmpty())  {
+                            escreve(buffer.get(0));
+                            buffer.remove(0);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    Integer iConsumido = buffer.remove(0);
-                    System.out.println("Consumidor: consumiu " + iConsumido);
-                    buffer.notify();
                 }
+            }
+        }
+
+        private void escreve(String mensagem) {
+            try {
+                FileWriter fr = new FileWriter(logFile, true);
+                BufferedWriter bw = new BufferedWriter(fr);
+
+                String logTexto = "[" + Log.dataAtual("yyyy-MM-dd HH:mm:ss") + "] " + mensagem + "\n";
+                bw.write(logTexto);
+
+                bw.close();
+            }  catch (Exception error) {
+                error.printStackTrace();
             }
         }
     }

@@ -1,6 +1,7 @@
 package org.example.webserver;
 
 import org.example.global.Global;
+import org.example.log.Log;
 import org.example.model.Atributo;
 import org.example.model.Lugar;
 
@@ -29,12 +30,12 @@ class RequestHandler extends Thread {
                 String[] lines = request.split("\n");
 
                 for (int i = 0; i < lines.length; i++) {
-                    System.out.println("[LINHA " + (i + 1) + "] " + lines[i]);
+                    Log.logTexto("[LINHA " + (i + 1) + "] " + lines[i]);
                 }
 
                 String[] requestLine = lines[0].split(" ");
                 String resource = requestLine[1];
-                System.out.println("[RECURSO] " + resource);
+                Log.logTexto("[RECURSO] " + resource);
 
                 if (resource.equals("/")) {
                     resource = "/index.html";

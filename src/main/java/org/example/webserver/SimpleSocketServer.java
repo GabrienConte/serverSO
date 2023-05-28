@@ -1,5 +1,6 @@
 package org.example.webserver;
 
+import org.example.log.Log;
 import org.example.model.Lugar;
 
 import java.io.*;
@@ -36,7 +37,7 @@ public class SimpleSocketServer extends Thread {
         running = true;
         while (running) {
             try {
-                System.out.println("Listening for a connection");
+                Log.logTexto("Listening for a connection");
 
                 // Call accept() to receive the next connection
                 Socket socket = serverSocket.accept();
