@@ -39,7 +39,7 @@ public class Log {
         }
     }
 
-    public class Produtor implements Runnable {
+    public class Leitor implements Runnable {
         private Random rnd = new Random(System.currentTimeMillis());
 
         @Override
@@ -63,7 +63,7 @@ public class Log {
         }
     }
 
-    public class Consumidor implements Runnable {
+    public class Escritor implements Runnable {
 
         @Override
         public void run() {
