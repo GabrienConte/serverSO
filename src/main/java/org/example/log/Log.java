@@ -1,5 +1,7 @@
 package org.example.log;
 
+import org.example.global.Global;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -21,7 +23,7 @@ public class Log {
     public static File createFile() {
         File myObj = null;
         try {
-            myObj = new File("arquivos_log\\log"+ dataAtual("yyyy-MM-dd_HH-mm") +".txt");
+            myObj = new File("arquivos_log\\log"+ Global.dataAtual("yyyy-MM-dd_HH-mm") +".txt");
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
             } else {
@@ -32,12 +34,6 @@ public class Log {
             e.printStackTrace();
         }
         return myObj;
-    }
-
-    public static String dataAtual(String formato) {
-        DateFormat dateFormat = new SimpleDateFormat(formato);
-        Calendar cal = Calendar.getInstance();
-        return dateFormat.format(cal.getTime());
     }
 
     public static void logTexto(String texto) {
@@ -83,7 +79,7 @@ public class Log {
                 FileWriter fr = new FileWriter(logFile, true);
                 BufferedWriter bw = new BufferedWriter(fr);
 
-                String logTexto = "[" + Log.dataAtual("yyyy-MM-dd HH:mm:ss") + "] " + mensagem + "\n";
+                String logTexto = "[" + Global.dataAtual("yyyy-MM-dd HH:mm:ss") + "] " + mensagem + "\n";
                 bw.write(logTexto);
 
                 bw.close();

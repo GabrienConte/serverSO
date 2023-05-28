@@ -26,16 +26,20 @@ class RequestHandler extends Thread {
 
                 byte[] buffer = new byte[20000];
                 int nBytes = in.read(buffer);
+
                 String request = new String(buffer, 0, nBytes);
                 String[] lines = request.split("\n");
 
                 for (int i = 0; i < lines.length; i++) {
                     Log.logTexto("[LINHA " + (i + 1) + "] " + lines[i]);
+                    System.out.println("[LINHA " + (i + 1) + "] " + lines[i]);
                 }
 
                 String[] requestLine = lines[0].split(" ");
                 String resource = requestLine[1];
+
                 Log.logTexto("[RECURSO] " + resource);
+                System.out.println("[RECURSO] " + resource);
 
                 if (resource.equals("/")) {
                     resource = "/index.html";
@@ -55,8 +59,8 @@ class RequestHandler extends Thread {
                 resource = resource.replace('/', File.separatorChar);
                 String header = "HTTP/1.1 200 OK\n" +
                         "Content-Type: " + getContentType(resource) + "; charset=utf-8\n\n";
-                File file = new File("arquivos_html" + resource);
 
+                File file = new File("arquivos_html" + resource);
                 try (ByteArrayOutputStream bout = new ByteArrayOutputStream()) {
                     if (!file.exists()) {
                         bout.write("404 NOT FOUND\n\n".getBytes(StandardCharsets.UTF_8));

@@ -19,12 +19,13 @@ public class Lugar {
         return lugarCollection.stream().filter(lug -> idProcurado.equals(Integer.toString(lug.getId()))).findFirst().orElse(null);
     }
 
-    public int getId() {
-        return id;
+    public void FazerReserva(String reservaNome, String dataReserva) {
+        this.setReserva(reservaNome);
+        this.setDataReserva(dataReserva);
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getId() {
+        return id;
     }
 
     public String getReserva() {

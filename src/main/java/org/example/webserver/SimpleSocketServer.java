@@ -38,11 +38,10 @@ public class SimpleSocketServer extends Thread {
         while (running) {
             try {
                 Log.logTexto("Listening for a connection");
+                System.out.println("Listening for a connection");
 
-                // Call accept() to receive the next connection
                 Socket socket = serverSocket.accept();
 
-                // Pass the socket to the RequestHandler thread for processing
                 RequestHandler requestHandler = new RequestHandler(socket);
                 requestHandler.start();
             } catch (IOException e) {
