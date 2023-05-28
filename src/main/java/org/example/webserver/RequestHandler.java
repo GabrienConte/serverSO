@@ -52,7 +52,7 @@ class RequestHandler extends Thread {
                     resource = "/reserva.html";
                 } else if(resource.contains("/index")) {
 
-                    formProcesso = ProcessaHTML.ProcessaIndexForm(resource);
+                    formProcesso = ProcessaHTML.ProcessaIndexForm(resource, this.socket.getRemoteSocketAddress().toString());
                     resource = "/index.html";
                 }
 

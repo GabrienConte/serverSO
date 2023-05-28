@@ -44,7 +44,7 @@ public class ProcessaHTML {
         return cardLugares.toString();
     }
 
-    public synchronized static String ProcessaIndexForm(String resource) {
+    public synchronized static String ProcessaIndexForm(String resource, String ipRequest) {
         try {
             String[] arr = resource.split("[?]");
             if(arr.length > 1) {
@@ -72,14 +72,14 @@ public class ProcessaHTML {
                             String dataReservaFormatada;
                             dataReservaFormatada = dataReserva.getValor().replace('X',':').replace('+',' ');
 
-                            lugarReservado.FazerReserva(reserva.getValor(), dataReservaFormatada);
+                            lugarReservado.FazerReserva(reserva.getValor(), dataReservaFormatada, ipRequest);
 
-                            Log.logTexto("[RESERVADO UM LUGAR] VALOR=" + reserva.getValor() + " ID=" + id.getValor());
-                            System.out.println("[RESERVADO UM LUGAR] VALOR=" + reserva.getValor() + " ID=" + id.getValor());
+                            Log.logTexto("[RESERVADO UM LUGAR] " + lugarReservado.toString());
+                            System.out.println("[RESERVADO UM LUGAR] " + lugarReservado.toString());
                             return "RESERVADO UM LUGAR COM SUCESSO";
                         } else {
-                            Log.logTexto("[LUGAR JÁ ESTÁ RESERVADO] VALOR=" + lugarReservado.getReserva() + " ID=" + lugarReservado.getId());
-                            System.out.println("[LUGAR JÁ ESTÁ RESERVADO] VALOR=" + lugarReservado.getReserva() + " ID=" + lugarReservado.getId());
+                            Log.logTexto("[LUGAR JÁ ESTÁ RESERVADO]  " + lugarReservado.toString());
+                            System.out.println("[LUGAR JÁ ESTÁ RESERVADO] " + lugarReservado.toString());
                             return "LUGAR JÁ ESTÁ RESERVADO, TENTE OUTRO.";
                         }
                     }
