@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         InicializaLugar();
         Log log = new Log();
-        SimpleSocketServer server = new SimpleSocketServer(80);
+        SimpleSocketServer server = new SimpleSocketServer(8080);
         server.startServer();
 
         // Automatically shutdown in 1 minute
