@@ -24,6 +24,7 @@ public class Log {
         File myObj = null;
         try {
             myObj = new File("/app/so-example/arquivos_log/"+"log"+ Global.dataAtual("yyyy-MM-dd_HH-mm") +".txt");
+            System.out.println(myObj.getAbsolutePath().toString());
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
                 System.out.println(File.separatorChar);
