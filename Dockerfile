@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y git
 # Clone do projeto do GitHub
 RUN git clone https://github.com/GabrienConte/serverSO.git /app/so-example
 
-RUN mvn clean package
+RUN ["mvn", "package"]
 
 # Comando a ser executado quando o contêiner for iniciado
 # java -cp target/classes org.example.Main
