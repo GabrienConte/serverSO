@@ -12,7 +12,7 @@ RUN git clone https://github.com/GabrienConte/serverSO.git /app/so-example
 
 WORKDIR /app/so-example
 
-RUN ["mvn", "package"]
+RUN mvn clean package
 
 # Comando a ser executado quando o contêiner for iniciado
 # java -cp target/classes org.example.Main

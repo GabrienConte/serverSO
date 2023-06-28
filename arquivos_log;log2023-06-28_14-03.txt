@@ -1,2 +1,0 @@
-[2023-06-28 14:03:19] Iniciou
-[2023-06-28 14:03:19] Listening for a connection
