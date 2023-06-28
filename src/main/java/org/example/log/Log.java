@@ -23,7 +23,7 @@ public class Log {
     public static File createFile() {
         File myObj = null;
         try {
-            myObj = new File("arquivos_log\\log"+ Global.dataAtual("yyyy-MM-dd_HH-mm") +".txt");
+            myObj = new File("arquivos_log/log"+ Global.dataAtual("yyyy-MM-dd_HH-mm") +".txt");
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
             } else {

@@ -6,3 +6,5 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8080:8080
+    volumes:
+      - C:\\log_files:/app/so-example/arquivos_log
