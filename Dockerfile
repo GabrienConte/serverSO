@@ -16,4 +16,4 @@ RUN mvn clean package
 
 # Comando a ser executado quando o contêiner for iniciado
 # java -cp target/classes org.example.Main
-ENTRYPOINT ["java", "-cp" , "target/classes", "org.example.Main"]
+#ENTRYPOINT ["java", "-cp" , "target/classes", "org.example.Main"]
